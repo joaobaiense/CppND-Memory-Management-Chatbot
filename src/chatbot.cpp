@@ -27,7 +27,7 @@ ChatBot::ChatBot(std::string filename)
     _rootNode = nullptr;
 
     // load image into heap memory
-    _image = std::make_unique<wxBitmap>(filename, wxBITMAP_TYPE_PNG);
+    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
@@ -35,11 +35,11 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    // if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-    // {
-    //     delete _image;
-    //     _image = NULL;
-    // }
+    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    {
+        delete _image;
+        _image = NULL;
+    }
 }
 
 //// STUDENT CODE
@@ -55,7 +55,14 @@ ChatBot::ChatBot(ChatBot &source){
     _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
-    _image = std::move(source._image);
+    // _image = std::move(source._image);
+
+    // if (_image != NULL || _image != nullptr)
+    //     delete _image;
+
+    _image = new wxBitmap();
+    *_image = *source._image;
+
 
     // clear source members 
     source._chatLogic = nullptr;
@@ -75,7 +82,12 @@ ChatBot& ChatBot::operator=(ChatBot &source){
     _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
-    _image = std::move(source._image);
+    // _image = std::move(source._image);
+
+    // if (_image != NULL || _image != nullptr)
+    //     delete _image;
+    _image = new wxBitmap();
+    *_image = *source._image;
 
     // clear source members 
     source._chatLogic = nullptr;
@@ -97,7 +109,12 @@ ChatBot::ChatBot(ChatBot &&source){
     _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
-    _image = std::move(source._image);
+    // _image = std::move(source._image);
+
+    // if (_image != NULL || _image != nullptr)
+    //     delete _image;
+    _image = new wxBitmap();
+    *_image = *source._image;
 
     // clear source members 
     source._chatLogic = nullptr;
@@ -121,7 +138,12 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
     _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
-    _image = std::move(source._image);
+    // _image = std::move(source._image);
+
+    // if (_image != NULL || _image != nullptr)
+    //     delete _image;
+    _image = new wxBitmap();
+    *_image = *source._image;
 
     // clear source members 
     source._chatLogic = nullptr;
